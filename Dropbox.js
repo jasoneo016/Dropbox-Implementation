@@ -5,6 +5,9 @@ var AWS = require('aws-sdk')
 
 var s3 = new AWS.S3();
 
+AWS.config.update({region:'us-west-1'});
+app.use(express.static(__dirname + '/'));
+
 var filePath = './dropbox/';
 var myBucket = 'zhengjasonzhangbucket';
 
@@ -15,15 +18,6 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-
-AWS.config.update({region:'us-west-1'});
-app.use(express.static(__dirname + '/'));
-
-
-//Adds message.txt to dropbox folder
-// fs.appendFile(filePath, fileData, function (err) {
-//     console.log(filePath + ' added.');
-// });
 
 //Updates whenever file is added
 fs.watch('./dropbox', function (event, filename) {
